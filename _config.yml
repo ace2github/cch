@@ -8,7 +8,7 @@ twitter_username:
 github_username:  ace2github
 
 safe: false
-pygments: true
+pygments: false
 excerpt_separator: "\n\n\n"
 paginate: 5
 
