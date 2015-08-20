@@ -1,8 +1,8 @@
 ---
 layout: post
 title:  "Swift 2.0 新特性"
-date:   2015-04-09 11:23:32
-categories: jekyll update
+date:   2015-08-20 15:58:00
+categories: Swift
 ---
 ![][img_swift]
 ###1、异常处理机制
