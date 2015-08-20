@@ -7,7 +7,7 @@ categories: Swift
 helloworld
 #Swift2.0 新特性
 
-![](https://developer.apple.com/assets/elements/icons/128x128/swift.png)
+![][Img_Url_Swift]
 
 ###1、异常处理机制
     关键字：`throws、throw、try、do、catch
@@ -36,4 +36,8 @@ iOS系统版本标准的判断方式
     其声明的代码范围内，一定会且最后执行的代码块，例如，函数内部声明，将会在函数调用结束返回前，defer代码被执行。
 
 * Refer To:
-  [What`s new in Swift 2.0](https://developer.apple.com/swift/) 
+  [What`s new in Swift 2.0][Refer_Swift]
+
+[Refer_Swift]:      https://developer.apple.com/swift/
+[Img_Url_Swift]:   https://developer.apple.com/assets/elements/icons/128x128/swift.png
+
