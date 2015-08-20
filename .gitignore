@@ -1,0 +1,7 @@
+#忽略gitignore文件
+#.gitignore
+
+#忽略_sites\_https文件夹
+_sites/
+_https/
+
