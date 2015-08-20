@@ -1,13 +1,11 @@
 # Site settings
-title: SCL
-motto: Stay Hungry Stay Foolish
+title: ~~~CCH的技术博客~~~
+motto: 写作让编码有轨迹（Stay Hungry Stay Foolish）
 email: 173141667@qq.com
 baseurl: "/cch.github.io" # the subpath of your site, e.g. /blog/
 url: "https://ace2github.github.io/cch.github.io/" # the base hostname & protocol for your site
 twitter_username: 
 github_username:  ace2github
-
-paginate: 3
 
 # Build settings
 markdown: redcarpet
