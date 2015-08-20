@@ -4,4 +4,5 @@
 #忽略_sites\_https文件夹
 _sites/
 _https/
+.sass-cache/
 
