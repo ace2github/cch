@@ -7,10 +7,7 @@ url: "https://ace2github.github.io/cch.github.io/" # the base hostname & protoco
 twitter_username: 
 github_username:  ace2github
 
-safe: false
-pygments: false
-excerpt_separator: "\n\n\n"
-paginate: 5
+paginate: 3
 
 # Build settings
 markdown: redcarpet

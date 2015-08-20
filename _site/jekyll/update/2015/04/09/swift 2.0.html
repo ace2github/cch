@@ -5,11 +5,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width initial-scale=1">
 
-  <title>About</title>
-  <meta name="description" content="">
+  <title>Swift 2.0 新特性</title>
+  <meta name="description" content="1、异常处理机制关键字：`throws、throw、try、do、catch协议：ErrorType2、打印语句合并Swift1.0中println()和print()打印函数合并成print()函数例如，print(&quot;我要换行！&quot;, appendNewline: true)3、availab...">
 
   <link rel="stylesheet" href="/cch.github.io/css/main.css">
-  <link rel="canonical" href="https://ace2github.github.io/cch.github.io//cch.github.io/about/">
+  <link rel="canonical" href="https://ace2github.github.io/cch.github.io//cch.github.io/jekyll/update/2015/04/09/swift%202.0.html">
   <link rel="alternate" type="application/atom+xml" title="SCL" href="https://ace2github.github.io/cch.github.io//cch.github.io/feed.xml" />
   <script src="/scripts/jquery-1.11.2.min.js"></script>
   <script src="/scripts/pithy.js"></script>
@@ -66,20 +66,56 @@
     <div class="page-content">
       <div class="wrapper">
         <div class="post">
-
-  <header class="post-header">
-    <h1 class="post-title">About</h1>
-  </header>
   <br>
+  <header class="post-header">
+    <h1 class="post-title">Swift 2.0 新特性</h1>
+    <p class="post-meta">Apr 9, 2015</p>
+  </header>
+
   <article class="post-content">
-    <p>This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at <a href="http://jekyllrb.com/">jekyllrb.com</a></p>
+    <p><img src="https://developer.apple.com/assets/elements/icons/128x128/swift.png" alt=""></p>
 
-<p>You can find the source code for the Jekyll new theme at: <a href="https://github.com/jglovier/jekyll-new">github.com/jglovier/jekyll-new</a></p>
+<h3>1、异常处理机制</h3>
 
-<p>You can find the source code for Jekyll at <a href="https://github.com/jekyll/jekyll">github.com/jekyll/jekyll</a></p>
+<p>关键字：`throws、throw、try、do、catch
+协议：ErrorType</p>
+
+<h3>2、打印语句合并</h3>
+
+<p>Swift1.0中println()和print()打印函数合并成print()函数
+例如，print(&quot;我要换行！&quot;, appendNewline: true)</p>
+
+<h3>3、available关键字</h3>
+
+<p>iOS系统版本标准的判断方式</p>
+
+<blockquote>
+<p>if #available(iOS 6,*){
+    ...
+}else{
+    ...
+}</p>
+</blockquote>
+
+<h3>4、do/while更改为repeat/while</h3>
+
+<h3>5、guard语句</h3>
+
+<p>与if语句类似，但guard语句只有一个代码块，没有else/else if。</p>
+
+<h3>6、defer关键字</h3>
+
+<p>作用类似Java等语言的try/finally中的finally。
+其声明的代码范围内，一定会且最后执行的代码块，例如，函数内部声明，将会在函数调用结束返回前，defer代码被执行。</p>
+
+<hr>
+
+<ul>
+<li>Refer To:
+<a href="https://developer.apple.com/swift/">What`s new in Swift 2.0</a></li>
+</ul>
 
   </article>
-
 </div>
 
       </div>
