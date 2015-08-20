@@ -1,9 +1,10 @@
 ﻿---
 layout: post
-title:  "Swift2.0 `s new features"
+title:  "Swift2.0`s new features"
 date:   2015-08-20 14:58:00
 categories: Swift
 ---
+
 #Swift2.0 新特性
 
 ![](https://developer.apple.com/assets/elements/icons/128x128/swift.png)
@@ -36,3 +37,4 @@ iOS系统版本标准的判断方式
 
 * Refer To:
   [What`s new in Swift 2.0](https://developer.apple.com/swift/) 
+  
