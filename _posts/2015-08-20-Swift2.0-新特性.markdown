@@ -2,9 +2,9 @@
 layout: post
 title:  "Swift2.0`s new features"
 date:   2015-08-20 14:58:00
-categories: Swift
+categories: Swift 
 ---
-    helloworld
+helloworld
 #Swift2.0 新特性
 
 ![](https://developer.apple.com/assets/elements/icons/128x128/swift.png)
