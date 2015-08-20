@@ -1,4 +1,11 @@
-﻿#Swift2.0 新特性
+﻿---
+layout: post
+title:  "Swift2.0 新特性"
+date:   2015-08-20 14:58:00
+categories: Swift
+---
+
+#Swift2.0 新特性
 
 Tags: Swift
 
