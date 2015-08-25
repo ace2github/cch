@@ -1,8 +1,8 @@
 ---
 layout: post
 title:  "数据安全"
-date:   2015-08-24 15:58:00
-categories: 安全
+date:   2015-07-24 15:58:00
+categories: Secure
 ---
 ##一、专有名词：
 *	对称加密     Symmetric Cryptographic	
