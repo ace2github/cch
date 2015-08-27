@@ -1,0 +1,547 @@
+---
+layout: post
+title:  "Swift面试问题和答案"
+date:   2015-08-27 18:56:58
+categories: Swift
+---
+###Swift面试问题和答案	
+概述：	
+Swift发布才一年有余，已经受到很多开发者的欢迎。第一眼看到Swift的都会说，It is so easy!然而事实却是，Swift是一门复杂的语言，它包含面向对象和函数式编程，它的每一个新版本中都在变化调整。
+
+以下列举一些问题，可以来检测你或者应聘者的Swift语言水平，下面的问题被分为两部分：
+笔试题Written Question
+面试题Verbal Question
+每一部分都被分为三个水平：初级Beginner、Intermediate中级、Advanced高级
+
+
+####一、笔试题	
+#####1、初级		
+*	1、如何使用“区间”语法，更好的编码下面for循环
+
+		for var i=0; i<5; i++ {
+			print("\(i )")
+		}
+		for i in 0...4 {
+		 	print("\(i )")		
+		}
+		for i in 0..<5 {
+		  print("\(i)")
+		}	
+ 
+*	2、代码如下
+
+		struct Tutorial {
+			var difficulty: Int = 1
+		}
+ 
+		var tutorial1 = Tutorial()
+		var tutorial2 = tutorial1
+		tutorial2.difficulty = 2
+		
+请问tutorial2.difficulty和tutorial1.difficulty的值分别为多少？	
+如果Tutorial是Class类型，又如何？为什么？
+
+		tutorial1.difficulty	1
+		tutorial2.difficulty	2
+
+如果Tutorial是Class类型？		
+
+		tutorial1.difficulty	2		
+		tutorial2.difficulty	2	
+			
+因为结构体是值类型，赋值发生之拷贝行为；类是引用类型，赋值发生引用拷贝，仍然指向同一个对象。
+
+*	3、代码如下
+
+		var view1 = UIView()
+		view1.alpha = 0.5
+		 
+		let view2 = UIView()
+		view2.alpha = 0.5 	// Will this line compile?
+
+请问view1和view2有何不同，最后一行是否能顺利编译？	
+view1	变量，可以被重新修改，view1=view2	
+view2	常量，不能被重新赋值	
+由于UIView是Class类型，虽然view2为常量，但是其属性alpha为变量，可以被修改赋值。
+
+*	4、使用sort对数组进行排序，代码如下
+
+		let animals = ["fish", "cat", "chicken", "dog"]
+		let sortedAnimals = animals.sort { (one: String, two: String) -> Bool in
+		  return one < two
+		}
+
+请尽可能的简化以上的“闭包”？	
+
+	let sortedAnimals = animals.sort { (one, two) -> Bool in return one < two }
+	
+	let sortedAnimals = animals.sort { (one, two) in return one < two }
+	
+	let sortedAnimals = animals.sort { return $0 < $1 }
+	
+	let sortedAnimals = animals.sort { $0 < $1 }	
+	
+	let sortedAnimals = animals.sort(<)	
+
+*	5、代码如下：
+
+		class Address {
+		  var fullAddress: String
+		  var city: String
+		 
+		  init(fullAddress: String, city: String) {
+		    self.fullAddress = fullAddress
+		    self.city = city
+		  }
+		}
+		 
+		class Person {
+		  var name: String
+		  var address: Address
+		 
+		  init(name: String, address: Address) {
+		    self.name = name
+		    self.address = address
+		  }
+		}
+		 
+		var headquarters = Address(fullAddress: "123 Tutorial Street", city: "Appletown")
+		var ray = Person(name: "Ray", address: headquarters)
+		var brian = Person(name: "Brian", address: headquarters)
+		
+		//地址变更：
+		brian.address.fullAddress = "148 Tutorial Street"
+
+请问以上代码有啥问题？如何解决？	
+brian的地址虽然被正确的更新，但是ray的地址也变成和brain同样被更新，因为Address是Class类型，引用类型，ray和brain指向同一个引用，所以地址同步更新。		
+解决办法：Address声明为Struct类型，或者为ray和brain指定不同Address对象。	
+#####2、中级	
+*	1、Swift2.0
+
+代码如下:		
+
+	var optional1: String? = nil
+	var optional2: String? = .None
+
+请问nil和.None有何不同？optional1和optional2的区别？
+
+没有区别。Optional.None能正确的初始化一个可选类型为缺少值情况，同nil一样。nil == .None
+请记住，“可选类型”其本质是一个枚举类型，如下：	
+
+	enum Optional<T> {
+	  case None
+	  case Some(T)
+	}
+
+*	2、Swift 1.0	
+    
+代码如下	
+
+	public class ThermometerClass {
+	  private(set) var temperature: Double = 0.0
+	  public func registerTemperature(temperature: Double) {
+	    self.temperature = temperature
+	  }
+	}
+	 
+	let thermometerClass = ThermometerClass()
+	thermometerClass.registerTemperature(56.0)
+	 
+	public struct ThermometerStruct {
+	  private(set) var temperature: Double = 0.0
+	  public mutating func registerTemperature(temperature: Double) {
+	    self.temperature = temperature
+	  }
+	}
+	 
+	let thermometerStruct = ThermometerStruct()
+	thermometerStruct.registerTemperature(56.0)	
+代码编译失败，请问在哪里失败？为什么？	
+最后一行代码编译失败，因为thermometerStruct被声明为常量，不能被修改，即使其方法声明为mutating。
+	
+*	3、Swift[1.0,*]	
+
+代码如下：	
+
+	var thing = "cars"
+	let closure = { [thing] in
+	  print("I love \(thing)")
+	}
+	thing = "airplanes"
+	closure()
+
+请问输出什么？为什么？
+
+输出"I love cars"，因为thing是值类型，并且“闭包”声明时，“闭包”的捕捉列表里面复制一份thing的拷贝，即使外部的值改变，捕获列表里面的拷贝只不会发生变化。捕获列表显示的告诉编译器，进行值拷贝。
+
+	var thing = "cars"
+	let closure = {    
+	  print("I love \(thing)")
+	}
+	thing = "airplanes"
+	closure() 
+
+请问输出什么？为什么？
+
+输出"I love airplanes"。		
+因为“闭包”声明时候没有声明闭包捕获列表，因为在“闭包”内，编译器对于外部变量的使用“引用”，因为会随着外部的值改变而改变。
+
+*	4、Swift[2.0,*]
+
+全局函数如下，计算数组里面唯一值的个数	
+
+	func countUniques<T: Comparable>(array: Array<T>) -> Int {
+		let sorted = array.sort(<)
+		let initial: (T?, Int) = (.None, 0)
+		let reduced = sorted.reduce(initial) { ($1, $0.0 == $1 ? $0.1 : $0.1 + 1) }
+		return reduced.1
+	}
+	
+它使用操作符<和==，因此类型T遵循Comparable协议。		
+countUniques([1, 2, 3, 3]) // result is 3
+
+请使用扩展，将上面的全局函数扩展为数组的函数，让如下支持下面的调用？	
+`[1, 2, 3, 3].countUniques() // should print 3`
+
+	extension Array where Element: Comparable {
+	  func countUniques() -> Int {
+	    let sorted = sort(<)
+	    let initial: (Element?, Int) = (.None, 0)
+	    let reduced = sorted.reduce(initial) { ($1, $0.0 == $1 ? $0.1 : $0.1 + 1) }
+	    return reduced.1
+	  }
+	}
+
+*	5、Swift[2.0,*]  	
+
+代码如下：
+
+	
+	func divide(dividend: Double?, by divisor: Double?) -> Double? {
+		if dividend == .None {
+    		return .None
+		}
+		
+		if divisor == .None {
+    		return .None
+    	}
+    	if divisor == 0 {
+    		return .None
+    	}  
+    	return dividend! / divisor!
+    }
+    
+以上函数计算两个可选Double类型的余数，它进行三个判断:	
+dividend 有值			
+divisor  有值		
+divisor  不能为0	
+
+上面的函数能正确的工作，它有两个问题：		
+1、可以使用guard代替if语句		
+2、使用强制解析可选类型		
+请优化上面的函数，使用guard和避免使用强制解析？	
+
+	func divide(dividend: Double?, by divisor: Double?) -> Double? {
+		guard let dividend = dividend else { return .None }
+		guard let divisor = divisor else { return .None }
+		guard divisor != 0 else { return .None }
+		return dividend / divisor
+	}
+	
+更加简便的写法：
+
+	func divide(dividend: Double?, by divisor: Double?) -> Double? {
+		guard let dividend = dividend, divisor = divisor where divisor != 0 else { return .None }
+		return dividend / divisor
+	}
+
+
+
+
+#####3、高级
+
+*	1、Swift[1.0,*]  
+下面的结构体，对模型化温度:  
+		
+		public struct Thermometer {
+			public var temperature: Double
+			public init(temperature: Double) {
+			    self.temperature = temperature
+			}
+		}
+		//实例化
+		var t: Thermometer = Thermometer(temperature:56.8)
+		
+	能否希望用以下式子实例化Thermometer，是否可以？怎么做？  
+	
+	**解决方案：**	
+	Swift定义以下一些协议，允许使用“赋值”语法即==，对一个具体的“类型”进行初始化：  
+	`NilLiteralConvertible
+、BooleanLiteralConvertible
+、IntegerLiteralConvertible
+、FloatLiteralConvertible
+、UnicodeScalarLiteralConvertible
+、ExtendedGraphemeClusterLiteralConvertible
+、StringLiteralConvertible
+、ArrayLiteralConvertible
+、DictionaryLiteralConvertible`  
+	  
+	使用“extension”语法，扩展类型遵循上面的某个协议，并且提供一个public的初始化方法。  
+	
+		extension Thermometer : FloatLiteralConvertible{
+			public init(floatLiteral value: FloatLiteralType) {
+			    self.init(temperature: value)
+			}
+		}
+		//实例化
+		var t: Thermometer = 56.8
+	
+*	2、Swift[1.0,*]  
+	Swift自定义操作符，请自定义^^操作符，满足以下功能：  
+	*	两个Int的输入参数，例如:a，b
+	*	返回值为幂运算a^b
+	*	忽略溢出错误  
+	  		  
+	**解决方案：**自定义操作符，需要两步：  
+	1、声明Declaration：使用关键字operation指定类型(一元或者二元，unary or binary)，声明的顺序为：operator、associativity、precedence.
+	2、实现Implementation：运算符是以函数的形式进行定义的。
+	
+		infix operator ^^ { associativity left precedence 155 }
+		func ^^(lhs: Int, rhs: Int) -> Int {
+		  let l = Double(lhs)
+		  let r = Double(rhs)
+		  let p = pow(l, r)
+		  return Int(p)
+		}  
+
+*	3、Swift[1.0,*]  
+	能否按照下面给enum枚举提供初始值？为什么？  
+	
+		enum Edges : (Double, Double) {
+		  case TopLeft = (0.0, 0.0)
+		  case TopRight = (1.0, 0.0)
+		  case BottomLeft = (0.0, 1.0)
+		  case BottomRight = (1.0, 1.0)
+		}
+	**答案：**  不行，枚举的初始值必须满足以下条件  
+	1、必须遵循Equatable协议  
+	2、必须以下类型的字面量`Int、String、Character`  
+	
+*	4、Swift[2.0,*]  
+	
+	以下代码，定义Pizza结构体、Pizzeria协议、并且扩展Pizzeria协议  
+	
+		struct Pizza {
+		  let ingredients: [String]
+		}
+		 
+		protocol Pizzeria {
+		  func makePizza(ingredients: [String]) -> Pizza
+		  func makeMargherita() -> Pizza
+		}
+		 
+		extension Pizzeria {
+		  func makeMargherita() -> Pizza {
+		    return makePizza(["tomato", "mozzarella"])
+		  }
+		}
+	
+	定义Lombardis结构体：  
+	
+		struct Lombardis: Pizzeria {
+		  func makePizza(ingredients: [String]) -> Pizza {
+		    return Pizza(ingredients: ingredients)
+		  }
+		  func makeMargherita() -> Pizza {
+		    return makePizza(["tomato", "basil", "mozzarella"])
+		  }
+		}
+		
+		//应用场景
+		let lombardis1: Pizzeria = Lombardis()
+		let lombardis2: Lombardis = Lombardis()
+		 
+		lombardis1.makeMargherita()
+		lombardis2.makeMargherita()
+	
+	以上两个margherita拥有basil？  
+	两个都拥有basil，`Pizzeria`协议声明`makeMargherita()`方法，并且使用扩展为`Pizzeria`协议提供`makeMargherita()`的默认实现方法。两种情况下的实例化，都能被正确的调用。  
+	  
+	  请考虑以下情况：
+	
+		protocol Pizzeria {
+		  func makePizza(ingredients: [String]) -> Pizza
+		}
+		 
+		extension Pizzeria {
+		  func makeMargherita() -> Pizza {
+		    return makePizza(["tomato", "mozzarella"])
+		  }
+		}
+	这种情况下lombardis2拥有basil，lombardis1不包含basil。
+	
+*	5、Swift[2.0,*]  
+	
+	以下代码编译错误，请指出具体哪个位置？如何修改？至少提供三个方法 。 
+	
+		struct Kitten {
+		}
+		 
+		func showKitten(kitten: Kitten?) {
+		  guard let k = kitten else {
+		    print("There is no kitten")
+		  }
+		 
+		  print(k)
+		}
+	
+	**解析：**任何的`gard`语句的`eles`语句都需要退出路径,有以下三种解决方法  
+	1、else语句追加return
+		
+		func showKitten(kitten: Kitten?) {
+		  guard let k = kitten else {
+		    print("There is no kitten")
+		    return
+		  }
+		  print(k)
+		}
+		
+	2、使用`throw`抛出异常  
+	
+		enum KittenError: ErrorType {
+		  case NoKitten
+		}
+		 
+		struct Kitten {
+		}
+		 
+		func showKitten(kitten: Kitten?) throws {
+		  guard let k = kitten else {
+		    print("There is no kitten")
+		    throw KittenError.NoKitten
+		  }
+		  print(k)
+		}
+		 
+		try showKitten(nil)
+		
+	3、调用`fataError()`函数，它是一个`@noreturn`的函数  
+	
+		struct Kitten {
+		}
+		 
+		func showKitten(kitten: Kitten?) {
+		  guard let k = kitten else {
+		    print("There is no kitten")
+		    fatalError()
+		  }
+		  print(k)
+		}
+		
+	
+	
+###二、面试题  
+关于Swift理论和实践的开放性问题  
+
+#####初级  
+*	1、Swift[1.0,*]  
+	什么是`可选类型`？`可选类型`解决什么问题？  
+	
+	
+*	2、Swift[1.0,*]  
+	什么时候使用结构体？什么时候使用类？  
+	
+	
+*	3、Swift[1.0,*]  
+	什么是`泛型`？`泛型`解决什么问题？  
+	
+	
+		
+
+*	4、Swift[1.0,*]  
+	一些情况下，你没办法避免不使用`隐式解析可选`？什么时候？为什么？  
+	
+	
+	
+*	5、Swift[1.0,*]  
+	有多少种方法`解析可选`？这些方法是否安全？  
+	
+	
+
+#####中级  
+*	1、Swift[1.0,*]  
+	Swift语言是面向对象语言，还是函数式变成语言？  
+	
+	
+*	2、Swift[1.0,*]  
+	Swift包含以下的哪些特性？  
+	*	泛型类
+	*	泛型结构体
+	*	泛型协议
+	
+	
+*	3、Swift[1.0,*]  
+	定义常量  
+	Object-C：`const int number = 0;`  
+	Swift：`let number = 0`  
+	它们的区别是什么？为什么？  
+	
+	
+	
+		
+
+*	4、Swift[1.0,*]  
+	值类型中，定义静态属性和方法，使用static关键字。对于类类型，可以使用static或者class关键字，达到同样的目的。这时候static和class声明区别在哪里？为什么？  
+	
+	
+	
+*	5、Swift[1.0,*]  
+	是否可以通过`extension`追加存储属性？为什么？  
+	
+	
+#####高级  
+*	1、Swift[1.2]  
+	使用泛型声明`enum`枚举类型时，会遇到什么问题？  
+	
+		enum Either<T, V> {
+		  case Left(T)
+		  case Right(V)
+		}  
+	
+	
+*	2、Swift[1.0,*]  
+	闭包是值类型还是引用类型？为什么？
+	
+	
+*	3、Swift[1.0,*]  
+	
+ 
+	
+	
+	
+		
+
+*	4、Swift[1.0,*]  
+	请举例说明循环应用？你如何解决？  
+	
+	
+	
+*	5、Swift[2.0,*]  
+	Swift2.0的特性追加一个新的关键字允许定义`递归枚举-recursive enumerations`，这里有个`递归枚举`的例子，枚举`List`，条件项目`Node`关联两个子类型T和List。   
+	
+		enum List<T> {
+		    case Node(T, List<T>)
+		}
+	
+	关键字是什么？
+
+  
+	
+	
+	
+
+
+
+	
+---
+[Rerer To:](http://www.raywenderlich.com/110982/swift-interview-questions-answers)
