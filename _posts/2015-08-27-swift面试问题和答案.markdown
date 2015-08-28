@@ -5,9 +5,7 @@ date:   2015-08-27 18:56:58
 categories: Swift
 ---
 ###Swift面试问题和答案	
-概述：	
-Swift发布才一年有余，已经受到很多开发者的欢迎。第一眼看到Swift的都会说，It is so easy!然而事实却是，Swift是一门复杂的语言，它包含面向对象和函数式编程，它的每一个新版本中都在变化调整。
-
+概述：Swift发布才一年有余，已经受到很多开发者的欢迎。第一眼看到Swift的都会说，It is so easy!然而事实却是，Swift是一门复杂的语言，它包含面向对象和函数式编程，它的每一个新版本中都在变化调整。  
 以下列举一些问题，可以来检测你或者应聘者的Swift语言水平，下面的问题被分为两部分：
 笔试题Written Question
 面试题Verbal Question
@@ -38,18 +36,18 @@ Swift发布才一年有余，已经受到很多开发者的欢迎。第一眼看
 		var tutorial2 = tutorial1
 		tutorial2.difficulty = 2
 		
-请问tutorial2.difficulty和tutorial1.difficulty的值分别为多少？	
-如果Tutorial是Class类型，又如何？为什么？
+	请问tutorial2.difficulty和tutorial1.difficulty的值分别为多少？  
+	如果Tutorial是Class类型，又如何？为什么？
 
 		tutorial1.difficulty	1
 		tutorial2.difficulty	2
 
-如果Tutorial是Class类型？		
+	如果Tutorial是Class类型？		
 
 		tutorial1.difficulty	2		
 		tutorial2.difficulty	2	
 			
-因为结构体是值类型，赋值发生之拷贝行为；类是引用类型，赋值发生引用拷贝，仍然指向同一个对象。
+	因为结构体是值类型，赋值发生之拷贝行为；类是引用类型，赋值发生引用拷贝，仍然指向同一个对象。
 
 *	3、代码如下
 
@@ -59,10 +57,10 @@ Swift发布才一年有余，已经受到很多开发者的欢迎。第一眼看
 		let view2 = UIView()
 		view2.alpha = 0.5 	// Will this line compile?
 
-请问view1和view2有何不同，最后一行是否能顺利编译？	
-view1	变量，可以被重新修改，view1=view2	
-view2	常量，不能被重新赋值	
-由于UIView是Class类型，虽然view2为常量，但是其属性alpha为变量，可以被修改赋值。
+	请问view1和view2有何不同，最后一行是否能顺利编译？	
+	view1	变量，可以被重新修改，view1=view2	
+	view2	常量，不能被重新赋值	
+	由于UIView是Class类型，虽然view2为常量，但是其属性alpha为变量，可以被修改赋值。
 
 *	4、使用sort对数组进行排序，代码如下
 
@@ -71,17 +69,17 @@ view2	常量，不能被重新赋值
 		  return one < two
 		}
 
-请尽可能的简化以上的“闭包”？	
+	请尽可能的简化以上的“闭包”？	
 
-	let sortedAnimals = animals.sort { (one, two) -> Bool in return one < two }
-	
-	let sortedAnimals = animals.sort { (one, two) in return one < two }
-	
-	let sortedAnimals = animals.sort { return $0 < $1 }
-	
-	let sortedAnimals = animals.sort { $0 < $1 }	
-	
-	let sortedAnimals = animals.sort(<)	
+		let sortedAnimals = animals.sort { (one, two) -> Bool in return one < two }
+		
+		let sortedAnimals = animals.sort { (one, two) in return one < two }
+		
+		let sortedAnimals = animals.sort { return $0 < $1 }
+		
+		let sortedAnimals = animals.sort { $0 < $1 }	
+		
+		let sortedAnimals = animals.sort(<)	
 
 *	5、代码如下：
 
@@ -112,21 +110,21 @@ view2	常量，不能被重新赋值
 		//地址变更：
 		brian.address.fullAddress = "148 Tutorial Street"
 
-请问以上代码有啥问题？如何解决？	
-brian的地址虽然被正确的更新，但是ray的地址也变成和brain同样被更新，因为Address是Class类型，引用类型，ray和brain指向同一个引用，所以地址同步更新。		
-解决办法：Address声明为Struct类型，或者为ray和brain指定不同Address对象。	
+	请问以上代码有啥问题？如何解决？	
+	brian的地址虽然被正确的更新，但是ray的地址也变成和brain同样被更新，因为Address是Class类型，引用类型，ray和brain指向同一个引用，所以地址同步更新。		
+	解决办法：Address声明为Struct类型，或者为ray和brain指定不同Address对象。	
 #####2、中级	
 *	1、Swift2.0
 
-代码如下:		
+	代码如下:		
 
-	var optional1: String? = nil
-	var optional2: String? = .None
+		var optional1: String? = nil
+		var optional2: String? = .None
 
-请问nil和.None有何不同？optional1和optional2的区别？
-
-没有区别。Optional.None能正确的初始化一个可选类型为缺少值情况，同nil一样。nil == .None
-请记住，“可选类型”其本质是一个枚举类型，如下：	
+	请问nil和.None有何不同？optional1和optional2的区别？
+	
+	没有区别。Optional.None能正确的初始化一个可选类型为缺少值情况，同nil一样。nil == .None
+	请记住，“可选类型”其本质是一个枚举类型，如下：	
 
 	enum Optional<T> {
 	  case None
@@ -135,133 +133,131 @@ brian的地址虽然被正确的更新，但是ray的地址也变成和brain同�
 
 *	2、Swift 1.0	
     
-代码如下	
+	代码如下	
 
-	public class ThermometerClass {
-	  private(set) var temperature: Double = 0.0
-	  public func registerTemperature(temperature: Double) {
-	    self.temperature = temperature
-	  }
-	}
-	 
-	let thermometerClass = ThermometerClass()
-	thermometerClass.registerTemperature(56.0)
-	 
-	public struct ThermometerStruct {
-	  private(set) var temperature: Double = 0.0
-	  public mutating func registerTemperature(temperature: Double) {
-	    self.temperature = temperature
-	  }
-	}
-	 
-	let thermometerStruct = ThermometerStruct()
-	thermometerStruct.registerTemperature(56.0)	
-代码编译失败，请问在哪里失败？为什么？	
-最后一行代码编译失败，因为thermometerStruct被声明为常量，不能被修改，即使其方法声明为mutating。
+		public class ThermometerClass {
+		  private(set) var temperature: Double = 0.0
+		  public func registerTemperature(temperature: Double) {
+		    self.temperature = temperature
+		  }
+		}
+		 
+		let thermometerClass = ThermometerClass()
+		thermometerClass.registerTemperature(56.0)
+		 
+		public struct ThermometerStruct {
+		  private(set) var temperature: Double = 0.0
+		  public mutating func registerTemperature(temperature: Double) {
+		    self.temperature = temperature
+		  }
+		}
+		 
+		let thermometerStruct = ThermometerStruct()
+		thermometerStruct.registerTemperature(56.0)	
+	代码编译失败，请问在哪里失败？为什么？	
+	最后一行代码编译失败，因为thermometerStruct被声明为常量，不能被修改，即使其方法声明为mutating。
 	
 *	3、Swift[1.0,*]	
 
-代码如下：	
+	代码如下：	
 
-	var thing = "cars"
-	let closure = { [thing] in
-	  print("I love \(thing)")
-	}
-	thing = "airplanes"
-	closure()
+		var thing = "cars"
+		let closure = { [thing] in
+		  print("I love \(thing)")
+		}
+		thing = "airplanes"
+		closure()
 
-请问输出什么？为什么？
+	请问输出什么？为什么？  
+	输出"I love cars"  
+	因为thing是值类型，并且“闭包”声明时，“闭包”的捕捉列表里面复制一份thing的拷贝，即使外部的值改变，捕获列表里面的拷贝只不会发生变化。捕获列表显示的告诉编译器，进行值拷贝。
 
-输出"I love cars"，因为thing是值类型，并且“闭包”声明时，“闭包”的捕捉列表里面复制一份thing的拷贝，即使外部的值改变，捕获列表里面的拷贝只不会发生变化。捕获列表显示的告诉编译器，进行值拷贝。
-
-	var thing = "cars"
-	let closure = {    
-	  print("I love \(thing)")
-	}
-	thing = "airplanes"
-	closure() 
-
-请问输出什么？为什么？
-
-输出"I love airplanes"。		
-因为“闭包”声明时候没有声明闭包捕获列表，因为在“闭包”内，编译器对于外部变量的使用“引用”，因为会随着外部的值改变而改变。
+		var thing = "cars"
+		let closure = {    
+		  print("I love \(thing)")
+		}
+		thing = "airplanes"
+		closure() 
+	
+	请问输出什么？为什么？  
+	输出"I love airplanes"。	  
+	因为“闭包”声明时候没有声明闭包捕获列表，因为在“闭包”内，编译器对于外部变量的使用“引用”，因为会随着外部的值改变而改变。
 
 *	4、Swift[2.0,*]
 
-全局函数如下，计算数组里面唯一值的个数	
-
-	func countUniques<T: Comparable>(array: Array<T>) -> Int {
-		let sorted = array.sort(<)
-		let initial: (T?, Int) = (.None, 0)
-		let reduced = sorted.reduce(initial) { ($1, $0.0 == $1 ? $0.1 : $0.1 + 1) }
-		return reduced.1
-	}
+	全局函数如下，计算数组里面唯一值的个数	
 	
-它使用操作符<和==，因此类型T遵循Comparable协议。		
-countUniques([1, 2, 3, 3]) // result is 3
-
-请使用扩展，将上面的全局函数扩展为数组的函数，让如下支持下面的调用？	
-`[1, 2, 3, 3].countUniques() // should print 3`
-
-	extension Array where Element: Comparable {
-	  func countUniques() -> Int {
-	    let sorted = sort(<)
-	    let initial: (Element?, Int) = (.None, 0)
-	    let reduced = sorted.reduce(initial) { ($1, $0.0 == $1 ? $0.1 : $0.1 + 1) }
-	    return reduced.1
-	  }
-	}
+		func countUniques<T: Comparable>(array: Array<T>) -> Int {
+			let sorted = array.sort(<)
+			let initial: (T?, Int) = (.None, 0)
+			let reduced = sorted.reduce(initial) { ($1, $0.0 == $1 ? $0.1 : $0.1 + 1) }
+			return reduced.1
+		}
+		
+	它使用操作符<和==，因此类型T遵循Comparable协议。	
+	`countUniques([1, 2, 3, 3]) // result is 3`
+	
+	请使用扩展，将上面的全局函数扩展为数组的函数，让如下支持下面的调用？	
+	`[1, 2, 3, 3].countUniques() // should print 3`
+	
+		extension Array where Element: Comparable {
+		  func countUniques() -> Int {
+		    let sorted = sort(<)
+		    let initial: (Element?, Int) = (.None, 0)
+		    let reduced = sorted.reduce(initial) { ($1, $0.0 == $1 ? $0.1 : $0.1 + 1) }
+		    return reduced.1
+		  }
+		}
 
 *	5、Swift[2.0,*]  	
 
-代码如下：
-
+	代码如下：
+		
+		func divide(dividend: Double?, by divisor: Double?) -> Double? {
+			if dividend == .None {
+	    		return .None
+			}
+			
+			if divisor == .None {
+	    		return .None
+	    	}
+	    	if divisor == 0 {
+	    		return .None
+	    	}  
+	    	return dividend! / divisor!
+	    }
+	    
+	以上函数计算两个可选Double类型的余数，它进行三个判断:	
+	dividend 有值			
+	divisor  有值		
+	divisor  不能为0	
 	
-	func divide(dividend: Double?, by divisor: Double?) -> Double? {
-		if dividend == .None {
-    		return .None
+	上面的函数能正确的工作，它有两个问题：		
+	1、可以使用guard代替if语句		
+	2、使用强制解析可选类型		
+	请优化上面的函数，使用guard和避免使用强制解析？	
+	
+		func divide(dividend: Double?, by divisor: Double?) -> Double? {
+			guard let dividend = dividend else { return .None }
+			guard let divisor = divisor else { return .None }
+			guard divisor != 0 else { return .None }
+			return dividend / divisor
 		}
 		
-		if divisor == .None {
-    		return .None
-    	}
-    	if divisor == 0 {
-    		return .None
-    	}  
-    	return dividend! / divisor!
-    }
-    
-以上函数计算两个可选Double类型的余数，它进行三个判断:	
-dividend 有值			
-divisor  有值		
-divisor  不能为0	
-
-上面的函数能正确的工作，它有两个问题：		
-1、可以使用guard代替if语句		
-2、使用强制解析可选类型		
-请优化上面的函数，使用guard和避免使用强制解析？	
-
-	func divide(dividend: Double?, by divisor: Double?) -> Double? {
-		guard let dividend = dividend else { return .None }
-		guard let divisor = divisor else { return .None }
-		guard divisor != 0 else { return .None }
-		return dividend / divisor
-	}
+	更加简便的写法：
 	
-更加简便的写法：
-
-	func divide(dividend: Double?, by divisor: Double?) -> Double? {
-		guard let dividend = dividend, divisor = divisor where divisor != 0 else { return .None }
-		return dividend / divisor
-	}
-
+		func divide(dividend: Double?, by divisor: Double?) -> Double? {
+			guard let dividend = dividend, divisor = divisor where divisor != 0 else { return .None }
+			return dividend / divisor
+		}
+	
 
 
 
 #####3、高级
 
 *	1、Swift[1.0,*]  
-下面的结构体，对模型化温度:  
+	下面的结构体，对模型化温度:  
 		
 		public struct Thermometer {
 			public var temperature: Double
