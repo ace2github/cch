@@ -443,24 +443,71 @@ categories: Swift
 *	1、Swift[1.0,*]  
 	什么是`可选类型`？`可选类型`解决什么问题？  
 	
+	**答案：**`可选类型`表示一个任何类型的`变量`要么有值，要么缺少值；不管是值类型还是引用类型变量。相当于`Objective-C`中的nil表示无值，但`Objective-C`中只能是引用类型才能为nil。  
 	
 *	2、Swift[1.0,*]  
 	什么时候使用结构体？什么时候使用类？  
 	
-	
+	**答案：**在实际的开发中，很难说清楚使用`class`或者`struct`更好一些。在`函数式编程`中更倾向于使用`struct`；在`面向对象编程`中更倾向于`class`。  
+	在`Swift`中，`class`和`struct`有以下不同点：
+	*	`class`支持继承，`struct`不支持
+	*	`class`是引用类型，`struct`是值类型
+	*	在`runtime`时候，`struct`比`class`更加的高效。因为，`struct`的方法在调用的时候是静态的，`class`方法调用是在`runtime`的时候动态判断调用的。	  		  
+	推荐：尽可能的使用`struct`除非你需要`继承`或者`引用`的特性。  
+	iOS SDK中，只有四个`class`，其余的类型都是用`struct`声明的。  
+	以上问题的深入讨论，详见[《Should I use a Swift struct or a class?》](http://faq.sealedabstract.com/structs_or_classes/)
+	  
+	  
 *	3、Swift[1.0,*]  
 	什么是`泛型`？`泛型`解决什么问题？  
 	
+	**答案：**`泛型`让`算法`对应多种不同`数据类型`的时候更加的安全、高效、简洁。提高代码的`可复用性`。  
+	在`Swift`中，`泛型`可以用在`函数`或者`数据类型`，包括`class、struct、enum`。
+	在`Objective-C`中，NSObject对应任何的引用类型，可以近似的模拟`泛型`的情景，但是并不安全和可靠。  
 	
+		func areIntEqual(x: Int, _ y: Int) -> Bool {
+		  return x == y
+		}
+		func areStringsEqual(x: String, _ y: String) -> Bool {
+		  return x == y
+		}
+		areStringsEqual("ray", "ray") // true
+		areIntEqual(1, 1) // true
 		
-
+		//OBJC的模拟
+		import Foundation
+		func areTheyEqual(x: NSObject, _ y: NSObject) -> Bool {
+		  return x == y
+		}
+		areTheyEqual("ray", "ray") // true
+		areTheyEqual(1, 1) // true
+		
+		//泛型才是王道
+		func areTheyEqual<T: Equatable>(x: T, _ y: T) -> Bool {
+		  return x == y
+		}
+		areTheyEqual("ray", "ray")
+		areTheyEqual(1, 1)
+  
+  
 *	4、Swift[1.0,*]  
 	一些情况下，你没办法避免不使用`隐式解析可选`？什么时候？为什么？  
 	
+	**建议：**有以下一些情况可以考虑使用`隐式解析可选`，如`String!`  
+	*	初始化的时候，自然不会被初始化为nil，一定有值的时候。例如，`IBOutlet`变量，在`Interface Builder`配置的属性。
+	*	解决`循环引用`的情况下，这时候两个`实例(instances)`互相引用对方，并且两个引用都不能为nil，即`non-nil`。这种情况下，一个引用申明为`unowned`，另一个声明为`隐式解析可选`。  
 	
-	
+	**注意：**实际开发中，应该避免使用`隐式解析可选`，使用`隐式解析可选`增加在`runtime`时候`crash`的概率。一些情况下，一个`crash`可能是一个预期的行为，但有更好的解决方法已达到相同的目的，例如使用`fatalError()`。  
+	  
+	  
 *	5、Swift[1.0,*]  
-	有多少种方法`解析可选`？这些方法是否安全？  
+	有多少种方法可以解析`可选`？这些方法是否安全？（6种方法）  
+	*	强制解析操作符`!`	—— unsafe  
+	*	类型声明为`隐式解析` —— 某些情况下unsafe  
+	*	`可选绑定` —— safe  
+	*	`guard`语句 —— safe  
+	*	`optional chaining`可选链 —— safe  
+	*	`nil coalescing operator，即??操作符` —— safe  
 	
 	
 
@@ -468,6 +515,14 @@ categories: Swift
 *	1、Swift[1.0,*]  
 	Swift语言是面向对象语言，还是函数式变成语言？  
 	
+	**建议：**`Swift`是一门混合型语言，同时兼容`面向对象OO`和`函数式编程`的特性。   
+	`Swift`有`面向对象`的三个准则：封装、继承、多态  
+	很难把`Swift`等同于`函数式编程`语言。`函数式编程`是一种编程模型，他将计算机运算看做是数学中函数的计算，并且避免了状态以及变量的概念表达式。例如，`Erlang`语言。   
+	`Swift`不是成熟的`函数式编程`语言，它只包含基础的`函数式编程`特性。   
+	
+	关于`函数式编程`请参考：  
+	[《函数式编程扫盲篇》](http://www.cnblogs.com/kym/archive/2011/03/07/1976519.html)  
+	[Wiki.Functional-programming](https://en.wikipedia.org/wiki/Functional_programming)  
 	
 *	2、Swift[1.0,*]  
 	Swift包含以下的哪些特性？  
@@ -475,6 +530,8 @@ categories: Swift
 	*	泛型结构体
 	*	泛型协议
 	
+	**建议：**泛型支持`class`、`struct`、`enum`、`全局函数`、`方法`。   
+	协议通过`typealias`语法也支持多类型，但不是`发型`，而仅仅是一个`占位符`。它经常引用一个`关联类型`。
 	
 *	3、Swift[1.0,*]  
 	定义常量  
@@ -482,18 +539,19 @@ categories: Swift
 	Swift：`let number = 0`  
 	它们的区别是什么？为什么？  
 	
-	
+	**建议：**const变量的初始化，实在编译的时候就指定一个具体的值或者表达式。let则是在`runtime`，初始化为静态或者动态表达式。
 	
 		
 
 *	4、Swift[1.0,*]  
 	值类型中，定义静态属性和方法，使用static关键字。对于类类型，可以使用static或者class关键字，达到同样的目的。这时候static和class声明区别在哪里？为什么？  
 	
-	
+	`static`声明的属性或函数是静态并且不能被重写。使用`class`声明属性或函数是静态，但可以被重写。`static`等价于`class final`。
 	
 *	5、Swift[1.0,*]  
 	是否可以通过`extension`追加存储属性？为什么？  
 	
+	**建议：**不行，`extension`只能为现有的类型追加新的行为，但是不能更改`类型本身`或者`接口`。如果你追加一个`存储属性`，你必须额外的内存存储新值，`extension`没办法处理。
 	
 #####高级  
 *	1、Swift[1.2]  
@@ -504,22 +562,39 @@ categories: Swift
 		  case Right(V)
 		}  
 	
+	**答案：**编译错误，错误信息`unimplemented IR generation feature non-fixed multi-payload enum layout`。  
+	因为T的内存大小没办法预先得知，枚举enum必须是固定大小。   
+	解决的办法是，将泛型分装成引用类型class，如下：   
+		
+		class Box<T> {
+		  let value: T
+		  init(_ value: T) {
+		    self.value = value
+		  }
+		}
+		enum Either<T, V> {
+		  case Left(Box<T>)
+		  case Right(Box<V>)
+		}
+	
+	**注意：**这个问题，只会影响Swift1.0，在Swift2.0该问题已经解决。
 	
 *	2、Swift[1.0,*]  
-	闭包是值类型还是引用类型？为什么？
+	闭包是值类型还是引用类型？
 	
+	**答案：**引用类型，如果一个闭包赋值给一个变量A，然后吧这个变量赋值给另一变量B，变量B和变量A指向同一个闭包，并且捕获列表也一并被复制。
 	
 *	3、Swift[1.0,*]  
+	`UInt`用来存储无符号整数。UInt使用构造器`public init(_ value: UInt)`，用来将Int类型转化为UInt。  
+	但是，转化负整数的时候，会导致编译错误，如`let maNegative = UInt(-1)`。计算机系统中，数值一律用补码来存储。负数存储在内存中，最高位表示符号位。   
+	如何把有Int转化为UInt，保证正确的内存表示。
 	
+	**答案：**使用以下构造器`UInt(bitPattern: Int)`,`let maNegative = UInt(bitPattern: -1)`
  
-	
-	
-	
-		
-
 *	4、Swift[1.0,*]  
 	请举例说明循环应用？你如何解决？  
 	
+	**建议：**当两个实例对象互相强引用彼此的时候，造成循环引用，导致内存没办法被释放。可以使用`weak`和`unowned`打破循环引用。
 	
 	
 *	5、Swift[2.0,*]  
@@ -530,13 +605,12 @@ categories: Swift
 		}
 	
 	关键字是什么？
-
-  
 	
-	
-	
-
-
+	**答案：**关键字`indirect`，如下：
+	  
+		enum List<T> {
+		    indirect case Cons(T, List<T>)
+		}
 
 	
 ---
