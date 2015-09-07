@@ -1,0 +1,46 @@
+---
+layout: post
+title:  "iOS开发技巧总结(持续更新中~)"
+date:   2015-09-06 18:56:58
+categories: Swift
+---
+###iOS开发技巧总结(持续更新中~) 
+
+####1、为AppDelegate减负  
+
+使用第三方平台的SDK，很多需要在Delegate添加对应的代码。例如广告、统计、Bug统计、评分系统、推送等。这无法让AppDelegate变的臃肿。这样的代码就显得乱，可以使用GCD的单例模式，来已启动就自动初始化。  
+
+	+ (void)appLaunchLoad {
+		static dispatch_once_t onceToken;
+		dispatch_once(&onceToken,^{
+			//1、广告	2、推送	3、评分	4、定位
+			//如果需要用到LaunchOption的例如APNS，写在AppDelegate中
+		});
+	}  
+	
+实践中，可以继承NSObject，实现一个ThirdPartService的类。  
+
+####2、使用Method Swizzling实现面向切向编程  
+对于需要页面的统计，例如友盟的页面统计API，可以避免需要在每个Controllers中去调用。  
+![image](http://cc.cocimg.com/api/uploads/20150906/1441527213944527.png)  
+![image](http://cc.cocimg.com/api/uploads/20150906/1441527220530960.png)
+
+####3、与网络模块的数据交互  
+1、网络请求下来的数据，建议向上层或者调用者返回原始的JSON数据格式，由上层或者调用者决定如何解析和使用数据，是否对JSON数据的实体化由上层决定。  
+2、网络层接口的提供，其中的参数是使用基本数据类型还是对象，建议使用对象数据类型。
+
+####4、NSNumber对象类型与基本数据类型  
+1、网络请求的参数，NSArray、NSDictionary只能放对象，所以NSNumber最合适  
+2、缓存无论plist、keyarchive，NSNumber非常合适  
+3、页面的展示  
+
+基础数据类型的快速转化为NSNumber：
+NSNumber *no = @(-20);
+label.text = [NSString stringWithFormat:@"%@",no];
+
+####5、采用防御性编程，预防Crash的发生  
+稍后奉上~
+
+
+------
+[寒哥教你学 iOS - 经验漫谈](http://www.cocoachina.com/ios/20150907/13339.html)
