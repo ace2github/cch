@@ -47,14 +47,26 @@ iOS的RunTime机制，让OC在运行时可以非常容易的获取对象实例�
 
 对于反射机制的使用场景，本人由于经验浅显，以下列举下本人知道一些使用场合：  
 
-*	简单`工厂模式`：使用NSObject的反射可以优雅的实现`工厂模式`，简化繁多的if-else or switch语句。
+*	简单`工厂模式`：使用NSObject的反射可以优雅的实现`工厂模式`，简化繁多的if-else or switch语句。具体的例子如下：
+		
+		+(id)factory:(NSString *)factoryName{
+			//更具类字符串名，创建对应类实例
+			Class class = NSClassFromString(factoryName);
+			id instance = [[class alloc] init];
+
+			//其他的一些操作
+			
+			return instance
+		}
+		
 *	事件分发：利用`objc_msgSend`机制，实现不同的事件分发给不同或者相同的对象处理。
 *	数据库ORM方案：将数据对象和数据库表的直接映射，简化数据库操作。	
 
 ###Reference To:   
 --- 
-[Objective-C Reflection](http://www.cnblogs.com/dyingbleed/archive/2013/05/05/3029547.html)
-[iOS的ORM实现](http://www.cocoachina.com/bbs/read.php?tid=104797)
+[Objective-C Reflection](http://www.cnblogs.com/dyingbleed/archive/2013/05/05/3029547.html)  
+[iOS的ORM实现](http://www.cocoachina.com/bbs/read.php?tid=104797)  
+[OC工厂模式](http://www.cnblogs.com/rosylxf/archive/2012/07/22/2603927.html)
 
 
 [Reflection_Define]:	http://baike.baidu.com/link?url=xtsczEFXW5D0aNCK9FQKaZuAqgF9GkDg-WR6MzO0fSqUM7F9g3yJoajJ1xnqWIXxAVbMAZOAleeajFYIc3nFda  
