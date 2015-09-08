@@ -41,7 +41,7 @@ iOS的RunTime机制，让OC在运行时可以非常容易的获取对象实例�
 	`Objective-C RunTime`是一个开源的库，它强大之处就在于程序允许的时候可以对运行的对象、方法、属性等进行随意的操作。  
 	本人在开发中，有使用到的`Objective-C RunTime`的功能，只有消息发送`objc_msgSend`和获取对象的属性`objc_property_t`。  
 	
-	>注：本文只是对于OC的`放射机制`作为一个入门了解，并不深入的去理解`Objective-C RunTime`，而且`Objective-C RunTime`是纯C接口，使用起来比较晦涩难懂。有兴趣的读者，可以`Objective-C RunTime`会作为一个专门的专题去学习。
+	>注：本文只是对于OC的`反射机制`作为一个入门了解，并不深入的去理解`Objective-C RunTime`，而且`Objective-C RunTime`是纯C接口，使用起来比较晦涩难懂，包含的内容也很多。有兴趣的读者，可以`Objective-C RunTime`会作为一个专门的专题去学习。
 
 ###四、实际中如何使用反射机制？
 
