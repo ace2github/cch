@@ -1,0 +1,60 @@
+---
+layout: post
+title:  "浅谈iOS的反射机制"
+date:   2015-06-18 12:00:00
+categories: iOS-Dev
+---
+一直对`放射机制`蛮好奇的，经常听Java开发的同事说起过。和同事讨论之后，粗粗了解下，感觉这和OC的Runtime有些相似。但一直以来也没好好的整理，现在来说说到底啥事反射？iOS的反射机制又是如何？
+
+###一、什么叫做反射？  
+[反射:][Reflection_Define]由Smith在1982年首次提出的，主要是指程序可以访问、检测和修改它本身状态或行为的一种能力。  
+
+**类比于Java的反射机制：**  
+[JAVA反射机制:][Java_Reflection_Define]在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意一个方法和属性；这种动态获取的信息以及动态调用对象的方法的功能称为java语言的反射机制。   
+
+###二、从Objective-C RunTime说起
+Objective-C 是面向运行时的语言（runtime oriented language），就是说它会尽可能的把编译和链接时要执行的逻辑延迟到运行时，这得力于其RunTime机制。  
+iOS的RunTime机制，让OC在运行时可以非常容易的获取对象实例的方式和属性，并且允许改变。这样的特性和`放射机制`是完全一致的。   
+幸运的是，iOS的SDK中，是支持这种特性的，并且apple早将`Objective-C RunTime`作为一个开源的库提供给开发者，允许开发者在程序Runtime的时候进行控制。   
+
+###三、Objective-C 反射机制  
+*	1、NSObject的反射 ：Cocoa层上，iOS提供简单的反射方法。
+	
+		//1、反射判断
+		- (BOOL)isKindOfClass:(Class)aClass  
+		- (BOOL)isMemberOfClass:(Class)aClass 
+		- (BOOL)respondsToSelector:(SEL)aSelector 
+		- (BOOL)conformsToProtocol:(Protocol *)aProtocol  
+		
+		//2、Class反射
+		Class class = NSClassFromString(@“Person”)
+		Person *person = [[class alloc] init];
+		NSString *className = NSStringFromClass([Person class]);
+		
+		//3、SEL的反射
+		SEL selector = NSSelectorFromString(@“setName:”)
+		[person performSelector:selector withObject:@“nike”]
+		NSStringFromSelector(@selector(setName:))
+
+*	2、强大的`Objective-C RunTime`库   
+
+	本人在开发中，有使用到的`Objective-C RunTime`的功能，只有消息发送`objc_msgSend`和获取对象的属性`objc_property_t`。  
+	
+	>注：本文只是对于OC的`放射机制`作为一个入门了解，并不深入的去理解`Objective-C RunTime`，而且`Objective-C RunTime`是纯C接口，使用起来比较晦涩难懂。有兴趣的读者，可以`Objective-C RunTime`会作为一个专门的专题去学习。
+
+###四、实际中如何使用反射机制？
+
+对于反射机制的使用场景，本人由于经验浅显，以下列举下本人知道一些使用场合：  
+
+*	简单`工厂模式`：使用NSObject的反射可以优雅的实现`工厂模式`，简化繁多的if-else or switch语句。
+*	事件分发：利用`objc_msgSend`机制，实现不同的事件分发给不同或者相同的对象处理。
+*	数据库ORM方案：将数据对象和数据库表的直接映射，简化数据库操作。	
+
+###Reference To:   
+--- 
+[Objective-C Reflection](http://www.cnblogs.com/dyingbleed/archive/2013/05/05/3029547.html)
+[iOS的ORM实现](http://www.cocoachina.com/bbs/read.php?tid=104797)
+
+
+[Reflection_Define]:	http://baike.baidu.com/link?url=xtsczEFXW5D0aNCK9FQKaZuAqgF9GkDg-WR6MzO0fSqUM7F9g3yJoajJ1xnqWIXxAVbMAZOAleeajFYIc3nFda  
+[Java_Reflection_Define]:	http://baike.baidu.com/link?url=xtsczEFXW5D0aNCK9FQKaZuAqgF9GkDg-WR6MzO0fSrHjSfl_gahaJ5geGHHOM2bPY_bvguohwuIkJvi457UdK
