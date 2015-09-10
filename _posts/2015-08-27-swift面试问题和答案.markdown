@@ -4,7 +4,6 @@ title:  "Swift面试问题和答案"
 date:   2015-08-27 18:56:58
 categories: Swift
 ---
-###Swift面试问题和答案	
 概述：Swift发布才一年有余，已经受到很多开发者的欢迎。第一眼看到Swift的都会说，It is so easy!然而事实却是，Swift是一门复杂的语言，它包含面向对象和函数式编程，它的每一个新版本中都在变化调整。  
 以下列举一些问题，可以来检测你或者应聘者的Swift语言水平，下面的问题被分为两部分：
 笔试题Written Question
