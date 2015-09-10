@@ -3,7 +3,9 @@ layout: post
 title:  "Objective-C中让人迷惑的self与super"
 date:   2015-09-10 20:56:58
 categories: iOS-Dev
----
+---  
+概述：大部分情况下`[self class]`和`[super class]`是一样的；但是重写class方法，`[self class]`和`[super class]`又不一样。这还要从self和super的机制谈起。  
+
 ###一、从代码看起
 
 	@interface Person : NSObject
