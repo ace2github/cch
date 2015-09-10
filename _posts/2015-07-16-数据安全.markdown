@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "数据安全"
-date:   2015-07-24 15:58:00
+date:   2015-07-16 15:58:00
 categories: Secure
 ---
 ##一、专有名词：
