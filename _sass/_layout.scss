@@ -184,6 +184,7 @@ li {
 .footer {
     font-size: 11px;
     text-align: center;
+    background-color: #515865;
 }
 
 #gotop {
@@ -197,6 +198,9 @@ li {
     cursor: pointer;
 }
 
+/**
+ * pagination
+ */
 .pagination {
     text-align: center;
 }
