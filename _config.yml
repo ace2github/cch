@@ -9,3 +9,6 @@ github_username:  ace2github
 
 # Build settings
 markdown: redcarpet
+
+paginate: 5
+paginate_path: "page:num"
