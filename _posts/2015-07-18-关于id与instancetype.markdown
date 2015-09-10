@@ -2,7 +2,7 @@
 layout: post
 title:  "关于id与instancetype"
 date:   2015-07-16 20:56:58
-categories: iOS Dev
+categories: iOS-Dev
 ---
 ####1、什么是instancetype  
 关键字instancetype是LLVM编译器特性，和Objective-C语法无关。instancetype用来表示Related Result Types(相关返回类型)，让编译器明确知道`类方法`的返回类型。  
