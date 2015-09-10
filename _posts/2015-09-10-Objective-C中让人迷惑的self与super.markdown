@@ -150,7 +150,7 @@ categories: iOS-Dev
 	    return self;
 	}
 
-更具上面的规则，`self = [super init]`会去调用父类的`init`方法，为父类分配内存空间，这样一直往下知道NSObject，这就形成`构造链`,继承父类的子类能够正确的初始化。
+根据上面的规则，`self = [super init]`会去调用父类的`init`方法，为父类分配内存空间，这样一直往下知道NSObject，这就形成`构造链`,继承父类的子类能够正确的初始化。
 
 ###Reference To：  
 ---  
